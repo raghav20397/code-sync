@@ -8,7 +8,6 @@ import { Editor } from "@monaco-editor/react";
 import { MonacoBinding } from "y-monaco";
 import { Loader2 } from "lucide-react";
 
-// Define colors for other users' cursors
 const CURSOR_COLORS = ["#DC2626", "#D97706", "#059669", "#2563EB", "#7C3AED"];
 
 const LANGUAGES = [
@@ -28,8 +27,7 @@ export default function CollaborativeEditor() {
   const [editor, setEditor] = useState<any>(null);
   const [provider, setProvider] = useState<any>(null);
   const [language, setLanguage] = useState("typescript");
-
-  // Set up Liveblocks Yjs connection
+// for liveblocks yjs connextion
   useEffect(() => {
     const yDoc = new Y.Doc();
     const yText = yDoc.getText("monaco");
@@ -42,7 +40,7 @@ export default function CollaborativeEditor() {
     };
   }, [room]);
 
-  // Bind Monaco to Yjs
+// binding monaco to yjs
   useEffect(() => {
     if (!editor || !provider) return;
 
@@ -52,7 +50,6 @@ export default function CollaborativeEditor() {
       new Set([editor]),
       provider.awareness
     );
-
     return () => {
       binding.destroy();
     };
@@ -64,7 +61,7 @@ export default function CollaborativeEditor() {
 
   return (
     <div className="h-full w-full flex flex-col bg-[#1e1e1e] relative">
-      {/* Toolbar */}
+{/* toolbar */}
       <div className="h-10 bg-[#1e1e1e] border-b border-gray-800 flex items-center px-4 gap-4 z-10">
         <div className="flex items-center gap-2">
             <span className="text-gray-400 text-xs font-medium uppercase tracking-wider">Language:</span>
@@ -92,7 +89,7 @@ export default function CollaborativeEditor() {
         )}
       </div>
 
-      {/* Editor Container */}
+      {/* the editor div */}
       <div className="flex-1 overflow-hidden">
           <Editor
             height="100%"
@@ -105,7 +102,7 @@ export default function CollaborativeEditor() {
               fontSize: 14,
               padding: { top: 16 },
               scrollBeyondLastLine: false,
-              automaticLayout: true, // Keeps editor resized correctly
+              automaticLayout: true, //dynamic resizing
             }}
           />
       </div>

@@ -20,11 +20,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // 2. Keep ClerkProvider as the top-level wrapper for auth
     <ClerkProvider>
       <html lang="en">
         <body className={`font-sans ${inter.variable}`}>
-          {/* 3. Wrap the children in TRPCReactProvider to enable API queries */}
           <TRPCReactProvider>
              {children}
           </TRPCReactProvider>

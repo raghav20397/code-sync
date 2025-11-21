@@ -9,7 +9,7 @@ import Link from "next/link";
 import { ArrowLeft, Share2, Terminal, Loader2 } from "lucide-react"; 
 import ActiveUsers from "@/components/ActiveUsers"; 
 
-// Dynamically import editor to avoid "window is not defined"
+// import editor dynamcally
 const CollaborativeEditor = dynamic(
   () => import("@/components/CollaborativeEditor"),
   { ssr: false }
@@ -20,15 +20,14 @@ export default function RoomPage() {
   const roomId = params.roomId as string;
 
   return (
-    // 1. Use h-screen and overflow-hidden to ensure the editor fits the window exactly
+    // use h-screen and overflow-hidden to ensure the editor fits the window exactly
     <main className="flex h-screen flex-col bg-black text-white overflow-hidden">
       
-      {/* Room Header */}
       <header className="flex justify-between items-center p-4 border-b border-gray-800 h-16 shrink-0">
         <div className="flex items-center gap-4">
           <Link href="/" className="text-gray-400 hover:text-white transition flex items-center gap-2">
             <ArrowLeft size={20} />
-            {/* 2. CodeSync Logo */}
+            {/* codesync logo with lucide */}
             <Terminal className="text-blue-500" size={20} />
             <span className="font-bold hidden md:block">CodeSync</span>
           </Link>
@@ -42,7 +41,7 @@ export default function RoomPage() {
         
         <div className="flex items-center gap-4">
           <SignedIn>
-             {/* 3. Active Users Stack */}
+             {/* stack for aciv users */}
              <RoomProvider id={roomId} initialPresence={{ cursor: null }}>
                 <ClientSideSuspense fallback={null}>
                   {() => <ActiveUsers />}
@@ -67,8 +66,8 @@ export default function RoomPage() {
         </div>
       </header>
 
-      {/* Editor Area */}
-      {/* 4. flex-1 forces this div to take up all remaining height */}
+      
+      {/* flex-1 orautomatically taking up all height */}
       <div className="flex-1 overflow-hidden relative">
         <SignedIn>
           <RoomProvider id={roomId} initialPresence={{ cursor: null }}>

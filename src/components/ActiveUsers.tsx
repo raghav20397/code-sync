@@ -10,7 +10,7 @@ export default function ActiveUsers() {
   return (
     <div className="flex items-center justify-center gap-1">
       <div className="flex -space-x-2 overflow-hidden p-1">
-        {/* Render other users */}
+        {/* render all users*/}
         {others.slice(0, 3).map(({ connectionId, info }) => {
           return (
             <Avatar
@@ -22,14 +22,14 @@ export default function ActiveUsers() {
           );
         })}
 
-        {/* Counter if too many users */}
+        {/*counter if many */}
         {hasMoreUsers && (
           <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#121212] bg-[#2f2f2f] text-xs font-semibold text-white">
             +{others.length - 3}
           </div>
         )}
 
-        {/* Render yourself (always visible) */}
+        {/* we are always visible */}
         {currentUser && (
           <div className="relative ml-1">
             <Avatar
@@ -51,13 +51,13 @@ function Avatar({ name, picture, color }: { name: string; picture: string; color
       title={name}
       style={{ backgroundColor: color }} 
     >
-      {/* We use the image if available, otherwise fallback to color */}
+      {/* if image is availablee, else colour*/}
       <img
         src={picture}
         alt={name}
         className="h-full w-full rounded-full object-cover"
         onError={(e) => {
-          // Fallback if image fails to load
+          // if fails to load
           e.currentTarget.style.display = 'none';
         }}
       />

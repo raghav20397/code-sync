@@ -4,7 +4,6 @@ import { createRoomContext } from "@liveblocks/react";
 
 const client = createClient({
   authEndpoint: "/api/liveblocks-auth",
-  // publicApiKey: "", // We are using authEndpoint instead for security
 });
 
 type Presence = {

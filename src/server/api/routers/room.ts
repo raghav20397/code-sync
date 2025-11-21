@@ -3,7 +3,7 @@ import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { auth } from "@clerk/nextjs/server";
 
 export const roomRouter = createTRPCRouter({
-  // 1. Check if a room exists
+// checking if room exists already
   exists: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -14,8 +14,8 @@ export const roomRouter = createTRPCRouter({
       return !!room;
     }),
 
-  // 2. Create Room
-  create: publicProcedure
+// creating new room
+    create: publicProcedure
     .input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       const user = await auth();
@@ -29,8 +29,8 @@ export const roomRouter = createTRPCRouter({
       });
     }),
 
-  // 3. Get My Rooms
-  getMyRooms: publicProcedure.query(async ({ ctx }) => {
+// get rooms
+    getMyRooms: publicProcedure.query(async ({ ctx }) => {
     const user = await auth();
     if (!user.userId) return [];
 
@@ -43,15 +43,14 @@ export const roomRouter = createTRPCRouter({
       },
     });
   }),
-
-  // 4. Delete Room
+// delete room
   delete: publicProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const user = await auth();
       if (!user.userId) throw new Error("Unauthorized");
 
-      // Verify ownership before deleting
+// only delete if owner is deleting
       const room = await ctx.db.room.findUnique({
         where: { id: input.id },
       });
@@ -65,8 +64,8 @@ export const roomRouter = createTRPCRouter({
       });
     }),
 
-  // 5. Rename Room
-  rename: publicProcedure
+// rename room
+    rename: publicProcedure
     .input(z.object({ id: z.string(), name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       const user = await auth();
@@ -75,11 +74,9 @@ export const roomRouter = createTRPCRouter({
       const room = await ctx.db.room.findUnique({
         where: { id: input.id },
       });
-
       if (!room || room.userId !== user.userId) {
         throw new Error("You do not have permission to rename this room");
       }
-
       return ctx.db.room.update({
         where: { id: input.id },
         data: { name: input.name },

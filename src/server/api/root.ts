@@ -1,5 +1,5 @@
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
-import { roomRouter } from "./routers/room"; // Import the new file
+import { roomRouter } from "./routers/room"; 
 
 export const appRouter = createTRPCRouter({
   room: roomRouter,

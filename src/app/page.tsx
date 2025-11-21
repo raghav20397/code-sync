@@ -24,13 +24,13 @@ export default function Dashboard() {
 
   const deleteRoomMutation = api.room.delete.useMutation({
     onSuccess: () => {
-      refetch(); // Refresh the list after deletion
+      refetch(); //after deletion refresh pages
     },
   });
 
   const renameRoomMutation = api.room.rename.useMutation({
     onSuccess: () => {
-      refetch(); // Refresh the list after rename
+      refetch(); //refresh the list after rename
     },
   });
 
@@ -39,14 +39,14 @@ export default function Dashboard() {
   };
 
   const handleDelete = (e: React.MouseEvent, roomId: string) => {
-    e.preventDefault(); // Prevent clicking the link
+    e.preventDefault(); 
     if (confirm("Are you sure you want to delete this room? This cannot be undone.")) {
       deleteRoomMutation.mutate({ id: roomId });
     }
   };
 
   const handleRename = (e: React.MouseEvent, roomId: string, currentName: string) => {
-    e.preventDefault(); // Prevent clicking the link
+    e.preventDefault(); // prevent link clicking
     const newName = prompt("Enter new room name:", currentName);
     if (newName && newName !== currentName) {
       renameRoomMutation.mutate({ id: roomId, name: newName });
@@ -98,7 +98,7 @@ export default function Dashboard() {
           
           <SignedIn>
             <div className="flex flex-col md:flex-row gap-6 items-stretch w-full max-w-2xl">
-              {/* Create Room Card */}
+              {/* create room card */}
               <div className="flex-1 bg-gray-800/30 p-6 rounded-xl border border-gray-700 flex flex-col items-center gap-4 hover:border-blue-500/50 transition">
                  <div className="bg-blue-900/20 p-3 rounded-full text-blue-400">
                     <Plus size={24} />
@@ -115,7 +115,7 @@ export default function Dashboard() {
 
               <div className="hidden md:flex items-center justify-center text-gray-600 font-bold">OR</div>
 
-              {/* Join Room Card */}
+              {/* join room card */}
               <div className="flex-1 bg-gray-800/30 p-6 rounded-xl border border-gray-700 flex flex-col items-center gap-4 hover:border-purple-500/50 transition">
                  <div className="bg-purple-900/20 p-3 rounded-full text-purple-400">
                     <LogIn size={24} />
@@ -142,7 +142,7 @@ export default function Dashboard() {
           </SignedIn>
         </div>
 
-        {/* Room List Section */}
+        {/* list for room selection */}
         <SignedIn>
           <div className="max-w-4xl mx-auto border-t border-gray-800 pt-10">
             <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
@@ -171,7 +171,7 @@ export default function Dashboard() {
                         <span className="text-xs text-gray-600 font-mono mt-1 block">ID: {room.id}</span>
                       </div>
                       
-                      {/* Action Buttons */}
+                      {/* actions buttons like rename, del */}
                       <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button 
                           onClick={(e) => handleRename(e, room.id, room.name)}
