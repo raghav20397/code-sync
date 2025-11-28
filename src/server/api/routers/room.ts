@@ -2,11 +2,11 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { auth } from "@clerk/nextjs/server";
 
+//goruping public API endpoints
 export const roomRouter = createTRPCRouter({
-// checking if room exists already
-  exists: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
+// checking if room exists already,using zod, GET
+  exists: publicProcedure.input(z.object({ id: z.string() }))
+  .query(async ({ ctx, input }) => {
       const room = await ctx.db.room.findUnique({
         where: { id: input.id },
         select: { id: true },
@@ -14,12 +14,11 @@ export const roomRouter = createTRPCRouter({
       return !!room;
     }),
 
-// creating new room
-    create: publicProcedure
-    .input(z.object({ name: z.string().min(1) }))
+// creating new room, with input santitation using zod, POST
+    create: publicProcedure.input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       const user = await auth();
-      if (!user.userId) throw new Error("Unauthorized");
+      if (!user.userId) throw new Error("Unauthorized, please try again!");
 
       return ctx.db.room.create({
         data: {
@@ -28,9 +27,22 @@ export const roomRouter = createTRPCRouter({
         },
       });
     }),
-
+  checkName: publicProcedure
+  .query(async ({ ctx }) =>{
+      const user = await auth();
+      if(!user.userId) return [];
+      return ctx.db.room.findMany({
+        where: {
+          name: user.userId,
+        },
+        orderBy:{
+          name: "desc",
+        }
+      });
+    }),
 // get rooms
-    getMyRooms: publicProcedure.query(async ({ ctx }) => {
+  getMyRooms: publicProcedure
+  .query(async ({ ctx }) => {
     const user = await auth();
     if (!user.userId) return [];
 
@@ -44,8 +56,7 @@ export const roomRouter = createTRPCRouter({
     });
   }),
 // delete room
-  delete: publicProcedure
-    .input(z.object({ id: z.string() }))
+  delete: publicProcedure.input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const user = await auth();
       if (!user.userId) throw new Error("Unauthorized");

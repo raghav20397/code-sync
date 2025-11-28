@@ -15,13 +15,11 @@ export default function Dashboard() {
   const utils = api.useUtils();
   
   const { data: rooms, isLoading, refetch } = api.room.getMyRooms.useQuery();
-
   const createRoomMutation = api.room.create.useMutation({
     onSuccess: (room: { id: string }) => {
       router.push(`/room/${room.id}`);
     },
   });
-
   const deleteRoomMutation = api.room.delete.useMutation({
     onSuccess: () => {
       refetch(); //after deletion refresh pages

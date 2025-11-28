@@ -67,7 +67,7 @@ export default function RoomPage() {
       </header>
 
       
-      {/* flex-1 orautomatically taking up all height */}
+      {/* flex-1  automatically taking up all height */}
       <div className="flex-1 overflow-hidden relative">
         <SignedIn>
           <RoomProvider id={roomId} initialPresence={{ cursor: null }}>

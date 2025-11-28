@@ -22,7 +22,7 @@ export default function ActiveUsers() {
           );
         })}
 
-        {/*counter if many */}
+        {/*counter if more than 3 users */}
         {hasMoreUsers && (
           <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#121212] bg-[#2f2f2f] text-xs font-semibold text-white">
             +{others.length - 3}
