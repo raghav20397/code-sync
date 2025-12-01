@@ -2,6 +2,10 @@
 
 **CodeSync** is a real-time collaborative code editor built with T3. It allows multiple users to edit code simultaneously in the same room, seeing each other's cursors and changes instantly—just like Google Docs for code.
 
+## Live Demo
+**Try the app here:** [Link](https://code-sync-amber.vercel.app/)
+
+
 ## Features
 
 - **Real-time Collaboration:** Powered by **Liveblocks** and **Yjs** for sub-millisecond latency.
