@@ -9,8 +9,9 @@
 - **Authentication:** Secure login via **Clerk** (Google, GitHub, Email).
 - **Room Management:** Create, Join, Rename, and Delete coding rooms.
 - **Language Support:** Switch between TypeScript, Python, Java, Go, and more.
-- **Modern UI:** Built with **Tailwind CSS** and **Shadcn/UI** principles.
+- **Modern UI:** Built with **Tailwind CSS**.
 - **Type Safety:** Full end-to-end type safety with **tRPC**.
+- **Coming Soon..:** Support for running the code with **Piston API**.
 
 ## Tech Stack
 
